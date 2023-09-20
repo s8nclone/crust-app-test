@@ -55,37 +55,39 @@ const LoginScreen = ({navigation}) => {
     return (
         <View style={styles.layout}>
             <Text style={styles.title}>Welcome Back!</Text>
-            <View>
+            <View style={styles.container}>
                 <View>
-                    <TextInput 
-                        style={styles.inputField}
-                        placeholder="Username"
-                        onChangeText={text => setName(text)} 
-                    />
+                    <View>
+                        <TextInput 
+                            style={styles.inputField}
+                            placeholder="Username"
+                            onChangeText={text => setName(text)} 
+                        />
+                    </View>
+                    <View>
+                        <TextInput 
+                            style={styles.inputField}
+                            placeholder="Password"
+                            onChangeText={text => setPassword(text)}
+                            secureTextEntry 
+                        />
+                    </View>
                 </View>
-                <View>
-                    <TextInput 
-                        style={styles.inputField}
-                        placeholder="Password"
-                        onChangeText={text => setPassword(text)}
-                        secureTextEntry 
-                    />
-                </View>
-            </View>
-            <TouchableOpacity
-                style={[styles.button, { opacity: hasUser ? 1 : 0.5 }]}
-                disabled={!hasUser}
-                onPress={handleSubmit}
-            >
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    style={[styles.button, { opacity: hasUser ? 1 : 0.5 }]}
+                    disabled={!hasUser}
+                    onPress={handleSubmit}
+                >
+                    <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
 
-            {/* display error messages */}
-            {Object.values(errors).map((error, index) => (
-                <Text key={index} style={styles.error}>
-                    {error}
-                </Text>
-            ))}
+                {/* display error messages */}
+                {Object.values(errors).map((error, index) => (
+                    <Text key={index} style={styles.error}>
+                        {error}
+                    </Text>
+                ))}
+            </View>
       </View>
     );
 };
@@ -97,10 +99,21 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: '#b86023'
     },
     title: {
       fontSize: 32,
       marginBottom: 16,
+      fontWeight: '600'
+    },
+    container: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 350,
+        height: 250,
+        padding: 10
     },
     button: {
         width: 100,
@@ -118,12 +131,14 @@ const styles = StyleSheet.create({
     },
     inputField: {
         padding: 8,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: 'beige',
         width: 300,
-        borderColor: 'red',
-        borderRadius: 20,
+        borderColor: '#994408',
+        borderRadius: 10,
         marginTop: 5,
-        marginBottom: 5 
+        marginBottom: 5,
+        color: '#000',
+        borderWidth: 0.3
     },
     error: {
         color: 'red',
