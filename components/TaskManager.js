@@ -9,6 +9,7 @@ import {
   StyleSheet } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const TaskManager = () => {
   const { name } = useContext(AuthContext);
@@ -93,7 +94,7 @@ const TaskManager = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Welcome back <Text style={styles.username}>{name}</Text>!</Text>
         <TouchableOpacity onPress={handleLogout}>
@@ -117,13 +118,13 @@ const TaskManager = () => {
           {editIndex !== -1 ? 'Update Task' : 'Add Task'}
         </Text>
       </TouchableOpacity>
-      <Text style={styles.countTask}>You have {count} tasks left.</Text>
+      <Text style={styles.countTask}>You have {count} task(s) left.</Text>
       <FlatList
         data={tasks}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

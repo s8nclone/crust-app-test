@@ -10,7 +10,7 @@ export const AppNavigator = () => {
   return (
     <Stack.Navigator >
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
-      <Stack.Screen name="Task Manager" component={TaskManager} />
+      <Stack.Screen name="Task Manager" component={TaskManager} options={{headerShown: false}} />
     </Stack.Navigator>
   );
 };
