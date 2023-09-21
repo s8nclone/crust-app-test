@@ -112,12 +112,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: 350,
-        height: 250,
+        minHeight: 150,
         padding: 10
     },
     button: {
         width: 100,
-        backgroundColor: 'orange',
+        backgroundColor: '#994408',
         borderRadius: 8,
         paddingVertical: 10,
         alignItems: 'center',

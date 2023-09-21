@@ -8,6 +8,7 @@ import {
   FlatList,
   StyleSheet } from 'react-native';
 import Checkbox from 'expo-checkbox';
+import { useNavigation } from '@react-navigation/native';
 
 const TaskManager = () => {
   const { name } = useContext(AuthContext);
@@ -17,6 +18,9 @@ const TaskManager = () => {
   const [tasks, setTasks] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
   const [isChecked, setChecked] = useState(tasks.map(() => false));
+  const [count, setCount] = useState(0);
+
+  const navigation = useNavigation();
 
   const handleAddTask = () => {
     if (task && title) {
@@ -29,6 +33,7 @@ const TaskManager = () => {
       } else {
         // Add new task
         setTasks([...tasks, { title, task }]);
+        setCount(count + 1);
       }
       setTitle("");
       setTask("");
@@ -46,12 +51,23 @@ const TaskManager = () => {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
+    setCount(count - 1);
   };
   
   const handleToggleCheckbox = (index) => {
     const updateChecked = [...isChecked];
     updateChecked[index] = !updateChecked[index];
     setChecked(updateChecked);
+    if (updateChecked[index] === false) {
+      setCount((prevState)=> prevState + 1 );
+    } else {
+      setCount((prevState)=> prevState - 1)
+    }
+  };
+
+  const handleLogout = () => {
+    // Then navigate back to the previous screen using navigation.goBack()
+    navigation.goBack();
   };
 
   const renderItem = ({ item, index }) => (
@@ -79,7 +95,10 @@ const TaskManager = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Welcome back {name}! </Text>
+        <Text style={styles.title}>Welcome back <Text style={styles.username}>{name}</Text>!</Text>
+        <TouchableOpacity onPress={handleLogout}>
+          <Text style={styles.logoutButton}>Logout</Text>
+      </TouchableOpacity>
       </View>
       <TextInput
         style={styles.input}
@@ -98,6 +117,7 @@ const TaskManager = () => {
           {editIndex !== -1 ? 'Update Task' : 'Add Task'}
         </Text>
       </TouchableOpacity>
+      <Text style={styles.countTask}>You have {count} tasks left.</Text>
       <FlatList
         data={tasks}
         renderItem={renderItem}
@@ -118,14 +138,20 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   header: {
-    alignItems: 'center',
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   title: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "500",
     marginVertical: 10,
-    color: '#994408'
-
+    color: '#000',
+    maxWidth: '80%'
+  },
+  username:{
+    fontSize: 30,
+    color: "#994408"
   },
   input: {
     borderWidth: 3,
@@ -178,5 +204,17 @@ const styles = StyleSheet.create({
     color: "red",
     fontWeight: "bold",
     fontSize: 18,
+  },
+  countTask: {
+    fontSize: 20
+  },
+  logoutButton: {
+    backgroundColor:"#994408",
+    color: '#fff',
+    borderRadius: 5,
+    width: 60,
+    height: 30,
+    textAlign: "center",
+    textAlignVertical: "center"
   }
 })
