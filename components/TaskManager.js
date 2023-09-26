@@ -73,14 +73,7 @@ const TaskManager = () => {
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
 
-    const updateChecked = [...isChecked];
-    updateChecked[index] = !updateChecked[index];
-    
-    if (updateChecked[index] === false) {
-      setCount((prevState)=> prevState - 1 );
-    } else {
-      setCount((prevState)=> prevState + 0)
-    }
+    setCount((prevState)=> prevState + 0);
     
   };
   
